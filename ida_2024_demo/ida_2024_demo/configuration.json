@@ -1,0 +1,14 @@
+{
+    "dataset": "mnist", 
+    "split": "homogeneous",
+    "clients": 15,
+    "transformations": [0, 1, 2, 3, 4, 5],
+    "iterations": 40,
+    "sample_size": 3,
+    "global_learning_rate": 1.0,
+    "local_epochs": 3,
+    "optimizer": "Adam",
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "alpha-amplification": 2
+}
