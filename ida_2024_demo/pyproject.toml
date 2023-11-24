@@ -6,8 +6,9 @@ authors = ["Scolpe <maciejzuziak101@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10.9"
 numpy = "^1.26.2"
+fedata = "0.3.2"
 
 [build-system]
 requires = ["poetry-core"]

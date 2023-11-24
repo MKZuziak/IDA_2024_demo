@@ -1,6 +1,7 @@
 import json
 from numpy.random import uniform
 import os
+from fedata.hub.generate_dataset import generate_dataset
 
 def fetch_json(path):
     with open(path) as j_file:
@@ -77,5 +78,7 @@ def main(path):
     json_config = fetch_json(path)
     data_config = fetch_data_configuration(json_config)
     simulation_config = fetch_simulation_configuration(json_config)
-    print(data_config)
-    print(simulation_config)
+    
+    # generating datset
+    loaded_dataset = generate_dataset(config=data_config)
+    print(loaded_dataset)
