@@ -2,6 +2,9 @@ import json
 from numpy.random import uniform
 import os
 from fedata.hub.generate_dataset import generate_dataset
+from forcha.components.orchestrator.evaluator_orchestrator import Evaluator_Orchestrator
+from forcha.components.settings.init_settings import init_settings
+from forcha.models.templates.mnist import MNIST_Expanded_CNN
 
 def fetch_json(path):
     with open(path) as j_file:
@@ -81,4 +84,25 @@ def main(path):
     
     # generating datset
     loaded_dataset = generate_dataset(config=data_config)
-    print(loaded_dataset)
+    
+    settings = init_settings(
+        orchestrator_type='evaluator',
+        initialization_method='dict',
+        dict_settings=simulation_config,
+        allow_default=True
+    )
+    
+    model = MNIST_Expanded_CNN()
+    # Setting-up the orchestrator
+    orchestrator = Evaluator_Orchestrator(settings)
+    orchestrator.prepare_orchestrator(
+        model=model,
+        validation_data=loaded_dataset[0]
+    )
+    orchestrator.prepare_training(nodes_data=loaded_dataset[1])
+    signal = orchestrator.train_protocol()
+    print(signal)
+
+
+if __name__ == '__main__':
+    main()
