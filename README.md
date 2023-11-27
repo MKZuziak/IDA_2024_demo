@@ -50,4 +50,4 @@ All the required parameters are placed inside the configuration.json file. The t
     "alpha-amplification": 2      ### Alpha amplification [int]
 }
 ~~~
-Please note that in this case, alpha-amplification must be an int, as this is interpreted as the number of copies that will be added to the set (Remark no. 1 in the original paper)..
+Please note that in this case, alpha-amplification must be an int, as this is interpreted as the number of copies that will be added to the set (Remark no. 1 in the original paper).
