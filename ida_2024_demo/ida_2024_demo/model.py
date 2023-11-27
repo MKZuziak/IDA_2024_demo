@@ -4,7 +4,8 @@ import os
 from fedata.hub.generate_dataset import generate_dataset
 from forcha.components.orchestrator.evaluator_orchestrator import Evaluator_Orchestrator
 from forcha.components.settings.init_settings import init_settings
-from forcha.models.templates.mnist import MNIST_CNN
+from models.mnist_fmnist import MNIST_CNN
+from models.cifar_resnet import ResNet18
 
 def fetch_json(path):
     with open(path) as j_file:
@@ -96,7 +97,13 @@ def main(path = None,
         allow_default=True
     )
     
-    model = MNIST_CNN()
+    if config['dataset'] == 'MNIST' or config['dataset'] == 'FMNIST':
+        model = MNIST_CNN()
+    else:
+        model = ResNet18()
+    
+    print(model)
+    
     # Setting-up the orchestrator
     orchestrator = Evaluator_Orchestrator(settings)
     orchestrator.prepare_orchestrator(
