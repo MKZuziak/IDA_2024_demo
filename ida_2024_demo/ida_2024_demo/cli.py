@@ -2,10 +2,12 @@ import argparse
 import datetime
 from pathlib import Path
 import model
+import os
 
-def handle_results(path):
+
+def handle_results(path, savepath):
     print(f"---Loading configuration: {path}---")
-    model.main(path)
+    model.main(path, savepath=savepath)
 
 
 def handle_from_json(path):
@@ -85,7 +87,7 @@ def parse_input_list(limit: int):
                 print(f"Invalid input. Input must be a positive integer.")
         
 
-def handle_manual():
+def handle_manual(savepath):
     configuration = {}
     configuration['dataset'] = parse_input_str(choice='dataset',
                                                    choices=['mnist', 'fmnist', 'cifar10'])
@@ -102,7 +104,7 @@ def handle_manual():
     configuration['global_learning_rate'] = parse_input_float(choice='global learning rate')
     configuration['learning_rate'] = parse_input_float(choice='local learning rate')
     configuration['transformations'] = parse_input_list(limit=configuration['clients'])
-    model.main(from_json=False, config=configuration)
+    model.main(from_json=False, config=configuration, savepath=savepath)
 
         
 def main():
@@ -114,18 +116,36 @@ def main():
         general.add_argument("-m", "--manual", action="store_true")
         general.add_argument("-c", "--json", action="store_true")
         
+        parser.add_argument('-s', '--savepath', action='store')
         # For json mode
         parser.add_argument('-p', '--path', action='store', const=None, required=False)
         args = parser.parse_args()
+        
         if args.json == True:
             if args.path == None:
                 print("Enabling configuration mode requires setting up the path. Usage: 'python cli.py -c path/to/configuration.json' ")
                 raise SystemExit(1)
             else:
-                handle_results(path=args.path)
+                if args.savepath:
+                    savepath = os.path.join(args.savepath, 'demo_results')
+                    if not os.path.exists(savepath):
+                        os.mkdir(savepath)
+                else:
+                    savepath = os.path.join(os.getcwd(), 'demo_results')
+                    if not os.path.exists(savepath):
+                        os.mkdir(savepath)
+                handle_results(path=args.path, savepath=savepath)
         # For manual mode
         else:
-            handle_manual()
+            if args.savepath:
+                savepath = os.path.join(args.savepath, 'demo_results')
+                if not os.path.exists(savepath):
+                    os.mkdir(savepath)
+            else:
+                savepath = os.path.join(os.getcwd(), 'demo_results')
+                if not os.path.exists(savepath):
+                    os.mkdir(savepath)
+            handle_manual(savepath=savepath)
             
             
                 

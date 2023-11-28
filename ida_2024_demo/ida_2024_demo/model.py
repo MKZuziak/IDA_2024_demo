@@ -81,12 +81,14 @@ def fetch_simulation_configuration(parsed_file):
 
 def main(path = None,
          from_json: bool = True,
-         config: dict = None):
+         config: dict = None,
+         savepath = None):
     if from_json:
         config = fetch_json(path)
     data_config = fetch_data_configuration(config)
     simulation_config = fetch_simulation_configuration(config)
     
+    os.chdir(savepath)
     # generating datset
     loaded_dataset = generate_dataset(config=data_config)
     
@@ -97,12 +99,10 @@ def main(path = None,
         allow_default=True
     )
     
-    if config['dataset'] == 'MNIST' or config['dataset'] == 'FMNIST':
+    if config['dataset'] == 'mnist' or config['dataset'] == 'fmnist':
         model = MNIST_CNN()
     else:
         model = ResNet18()
-    
-    print(model)
     
     # Setting-up the orchestrator
     orchestrator = Evaluator_Orchestrator(settings)
