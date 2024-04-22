@@ -8,8 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10.9"
 numpy = "^1.26.2"
-forcha = "0.1.5"
-fedata = "0.3.2"
+forcha = "0.2.5"
+fedata = "^0.3.2"
 
 [build-system]
 requires = ["poetry-core"]
