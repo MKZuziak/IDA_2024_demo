@@ -22,7 +22,7 @@ poetry [cmd]
 The Demo Library supports two types of operations to configure your simulation. Firstly, you can run the simulation using a pre-configured JSON format. Secondly, you can manually insert all the parameters.
 Navigate inside the ida_2024_demo/ida_2024_demo folder and run:
 ~~~
-python cli.py -c configuration.json
+python cli.py -c -p configuration.json
 ~~~
 or
 ~~~
