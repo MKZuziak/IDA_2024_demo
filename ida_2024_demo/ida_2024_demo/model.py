@@ -72,7 +72,7 @@ def main(path = None,
     orchestrator = Evaluator_Orchestrator(
         settings=settings, 
         full_debug=True,
-        parallelization=True,
+        parallelization=False,
         number_of_workers=2
         )
     orchestrator.prepare_orchestrator(
